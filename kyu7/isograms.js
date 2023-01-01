@@ -20,3 +20,9 @@ function isIsogram(str){
     }
     return true;
 }
+
+// Solution using Set object (creates a new set from the original string composed of a single instance of each of its characters, and compares the set's size to the string's length):
+
+// function isIsogram(str){
+// 	return new Set(str.toUpperCase()).size == str.length;
+// }
