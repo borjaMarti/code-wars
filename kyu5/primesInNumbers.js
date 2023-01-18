@@ -46,7 +46,7 @@ function primeFactors(n){
 //         count = 0;
         
 //         while (n % i === 0) {
-//             factor++;
+//             count++;
 //             n /= i;
 //         }
         
