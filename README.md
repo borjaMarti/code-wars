@@ -6,9 +6,7 @@ The katas are categorized by kyu (level of difficulty), kyu 8 being the easiest,
 
 ## My profile:
 
-<img src="https://www.codewars.com/users/borjaMarti/badges/large" alt="Codewars widget showing my rank, username (borjaMarti), and honor points.">
-
-**Link:** https://www.codewars.com/users/borjaMarti
+<a href="https://www.codewars.com/users/borjaMarti"><img src="https://www.codewars.com/users/borjaMarti/badges/large" alt="Codewars widget showing my rank, username (borjaMarti), and honor points."></a>
 
 ## Lessons Learned:
 
