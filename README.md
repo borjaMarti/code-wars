@@ -4,9 +4,11 @@ This repository contains my solutions to katas (coding problems) that I practice
 
 The katas are categorized by kyu (level of difficulty), kyu 8 being the easiest, and kyu 1 the hardest.
 
-**Link to my profile:** https://www.codewars.com/users/borjaMarti
+## My profile:
 
 <img src="https://www.codewars.com/users/borjaMarti/badges/large" alt="Codewars widget showing my rank, username (borjaMarti), and honor points.">
+
+**Link:** https://www.codewars.com/users/borjaMarti
 
 ## Lessons Learned:
 
