@@ -17,7 +17,9 @@ In each kata, I like to include other user's solutions that I found clever or we
 Other than the algorithms and methods specific to each kata, there are also two main takeaways for me:
 
 · *There is (almost) always some way to improve*: 
+
 Although sometimes a naive implementation is enough, searching for other people's code or learning about the type of problem we are trying to solve can help us write better code and better solutions.
 
 · *Styling matters*: 
+
 It is difficult to understand someone else's code when they haven't put thought into the structure or variable names. I try to make my solutions as readable as possible by using relevant names and maintaining visual clearness.
