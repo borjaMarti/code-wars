@@ -12,13 +12,13 @@
 
 // The biggest possible sum taking a limit of 174 into account is then 173 and the distances of the 3 corresponding towns is [55, 58, 60].
 
-// The function chooseBestSum (or choose_best_sum or ... depending on the language) will take as parameters t (maximum sum of distances, integer >= 0), k (number of towns to visit, k >= 1) and ls (list of distances, all distances are positive or zero integers and this list has at least one element). The function returns the "best" sum ie the biggest possible sum of k distances less than or equal to the given limit t, if that sum exists, or otherwise nil, null, None, Nothing, depending on the language. In that case with C, C++, D, Dart, Fortran, F#, Go, Julia, Kotlin, Nim, OCaml, Pascal, Perl, PowerShell, Reason, Rust, Scala, Shell, Swift return -1.
+// The function chooseBestSum (or choose_best_sum or ... depending on the language) will take as parameters t (maximum sum of distances, integer >= 0), k (number of towns to visit, k >= 1) and ls (list of distances, all distances are positive or zero integers and this list has at least one element). The function returns the "best" sum ie the biggest possible sum of k distances less than or equal to the given limit t, if that sum exists, or otherwise null.
 
-// ts = [50, 55, 56, 57, 58] choose_best_sum(163, 3, ts) -> 163
+// ts = [50, 55, 56, 57, 58] chooseBestSum(163, 3, ts) -> 163
 
-// xs = [50] choose_best_sum(163, 3, xs) -> nil (or null or ... or -1 (C++, C, D, Rust, Swift, Go, ...)
+// xs = [50] chooseBestSum(163, 3, xs) -> null
 
-// ys = [91, 74, 73, 85, 73, 81, 87] choose_best_sum(230, 3, ys) -> 228
+// ys = [91, 74, 73, 85, 73, 81, 87] chooseBestSum(230, 3, ys) -> 228
 
 //   ·  try not to modify the input list of distances ls
 //   ·  in some languages this "list" is in fact a string (see the Sample Tests).
@@ -27,15 +27,9 @@ function chooseBestSum(t, k, ls) {
     // Problem
 }
 
-function backtrackBig(A, k) {
-    let i = 0;
-    let n = A.length;
-    let sum = 0;
-    return backtrack(A, i, sum, k, n);
-
-    function backtrack(A, i, sum, k, n) {
-        if (sum > k) return 0;
-        if (i === A.length) return sum;
-        return Math.max(backtrack(A, i + 1, sum, k, n), backtrack(A, i + 1, sum + A[i], k, n));
-    }
+function backtrack(A, k, i = 0, sum = 0) {
+    if (sum > k) return 0;
+    if (i === A.length) return sum;
+    return Math.max(backtrack(A, k, i + 1, sum), backtrack(A, k, i + 1, sum + A[i]));
 }
+
