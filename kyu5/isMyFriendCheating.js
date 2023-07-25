@@ -30,23 +30,18 @@
 function removeNb(n) {
   const sum = (n * (n + 1)) / 2;
   const ans = [];
-  const hashMap = new Map();
-  let fail = false;
 
-  for (let i = Math.floor(n / 2); i < n; i++) {
-    for (let j = i + 1; j <= n; j++) {
-      if (i * j === sum - i - j) {
-        ans.push([i, j], [j, i]);
-        fail = true;
-        break;
-      }
+  for (let a = Math.floor(n / 2); a < n; a++) {
+    let b = (sum - a) % a;
+    if (a * b === sum - a - b) {
+      ans.push([a, b], [b, a]);
     }
-    if (fail) break;
   }
 
   return ans.sort((a, b) => {
-    a[0] - b[0];
+    return a[0] - b[0];
   });
 }
 
-// Needs optimization
+// Took some time but finally found the solution, after doing a first
+// implementation with nested loops. Modulus was the answer.
