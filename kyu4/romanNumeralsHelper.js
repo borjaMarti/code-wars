@@ -14,50 +14,58 @@
 // RomanNumerals.fromRoman('M'); // should return 1000
 
 class RomanNumerals {
-    static numerals = {
-            'units': ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'],
-            'tens': ['X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC'],
-            'hundreds': ['C', 'CC', 'CCC', 'CD', 'D', 'DC', 'DCC', 'DCCC', 'CM'],
-            'thousands': ['M', 'MM', 'MMM']
+  static numerals = {
+    units: ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"],
+    tens: ["X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"],
+    hundreds: ["C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"],
+    thousands: ["M", "MM", "MMM"],
+  };
+
+  static toRoman(integer) {
+    let roman = String(integer).split("");
+
+    roman[roman.length - 1] = this.numerals.units[roman[roman.length - 1] - 1];
+    if (roman.length > 1)
+      roman[roman.length - 2] = this.numerals.tens[roman[roman.length - 2] - 1];
+    if (roman.length > 2)
+      roman[roman.length - 3] =
+        this.numerals.hundreds[roman[roman.length - 3] - 1];
+    if (roman.length > 3)
+      roman[roman.length - 4] =
+        this.numerals.thousands[roman[roman.length - 4] - 1];
+
+    return roman.join("");
+  }
+
+  static fromRoman(roman) {
+    let integer = 0;
+    let multiplier = 1;
+
+    for (let position of Object.keys(this.numerals)) {
+      if (
+        roman.includes(this.numerals[position][4]) &&
+        !roman.includes(this.numerals[position][0])
+      ) {
+        integer += 5 * multiplier;
+        roman = roman.slice(0, roman.indexOf(this.numerals[position][4]));
+        multiplier *= 10;
+        continue;
+      }
+
+      for (let number of this.numerals[position].slice().reverse()) {
+        if (number === this.numerals[position][4]) continue;
+        if (roman.includes(number)) {
+          integer += (this.numerals[position].indexOf(number) + 1) * multiplier;
+          roman = roman.slice(0, roman.indexOf(number));
+          break;
         }
-    
-    static toRoman(integer) {
-        let roman = String(integer).split('');
-        
-        roman[roman.length - 1] = this.numerals.units[roman[roman.length - 1] - 1];
-        if (roman.length > 1) roman[roman.length - 2] = this.numerals.tens[roman[roman.length - 2] - 1];
-        if (roman.length > 2) roman[roman.length - 3] = this.numerals.hundreds[roman[roman.length - 3] - 1];
-        if (roman.length > 3) roman[roman.length - 4] = this.numerals.thousands[roman[roman.length - 4] - 1];
-        
-        return roman.join('');
+      }
+
+      multiplier *= 10;
     }
-    
-    static fromRoman(roman) {
-        let integer = 0;
-        let multiplier = 1;
-      
-        for (let position of Object.keys( this.numerals ) ) {
-            if (roman.includes(this.numerals[position][4]) && !roman.includes(this.numerals[position][0]) ) {
-                integer += 5 * multiplier;
-                roman = roman.slice(0, roman.indexOf( this.numerals[position][4] ) );
-                multiplier *= 10;
-                continue;
-            }
 
-            for (let number of this.numerals[position].slice().reverse() ) {
-              if (number === this.numerals[position][4]) continue;
-              if (roman.includes(number) ) {
-                    integer += (this.numerals[position].indexOf(number) + 1) * multiplier;
-                    roman = roman.slice(0, roman.indexOf(number) );
-                    break;
-                }
-            }
-
-            multiplier *= 10;
-        }
-
-        return integer;
-    }
+    return integer;
+  }
 }
 
 // If not optimal, at least my solution is original (consolation prize ><).
@@ -68,29 +76,29 @@ class RomanNumerals {
 
 // class RomanNumerals {
 //     static numerals = [[1000, 'M'], [900,'CM'], [500,'D'],[400,'CD'], [100,'C'], [90,'XC'], [50,'L'], [40,'XL'], [10,'X'], [9,'IX'], [5,'V'], [4,'IV'], [1,'I']];
-    
+
 //     static toRoman(integer) {
 //       let roman = '';
-      
+
 //       for(let i = 0 ; i < this.numerals.length && integer > 0 ; i ++) {
-//         if (this.numerals[i][0] <= integer) { 
+//         if (this.numerals[i][0] <= integer) {
 //             roman += this.numerals[i][1];
-//             integer -= this.numerals[i][0]; 
+//             integer -= this.numerals[i][0];
 //             --i;
 //         }
 //       }
 
 //       return roman;
 //     }
-    
+
 //     static fromRoman(roman) {
 //       let integer = 0;
-      
+
 //       for(let i = 0 ; i < this.numerals.length ; i++) {
 //         if (roman.slice(0, this.numerals[i][1].length) === this.numerals[i][1]) {
 //             integer += this.numerals[i][0];
 //             roman = roman.slice(this.numerals[i][1].length);
-//             --i; 
+//             --i;
 //         }
 //       }
 
@@ -123,18 +131,18 @@ class RomanNumerals {
 //           result += current.char;
 //           num -= current.value;
 //         }
-        
+
 //         return result;
 //       }, '')
 //     }
-    
+
 //     static fromRoman(str) {
 //       return this.numerals.reduce((result, current) => {
 //         while (!str.indexOf(current.char)) {
 //           result += current.value;
 //           str = str.replace(current.char, '');
 //         }
-        
+
 //         return result;
 //       }, 0)
 //     }

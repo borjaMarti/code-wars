@@ -39,13 +39,20 @@
 // ]
 
 function checkCashRegister(price, cash, cid) {
-  let change = [];
+  const currency = {
+    PENNY: 1,
+    NICKEL: 5,
+    DIME: 10,
+    QUARTER: 25,
+    ONE: 100,
+    FIVE: 500,
+    TEN: 1000,
+    TWENTY: 2000,
+    "ONE HUNDRED": 10000,
+  };
+  const change = [];
   let rest = cash * 100 - price * 100;
   let totalCid = 0;
-  let insufficient = {
-    status: "INSUFFICIENT_FUNDS",
-    change: [],
-  };
 
   for (let money of cid) {
     totalCid += money[1] * 100;
@@ -56,77 +63,16 @@ function checkCashRegister(price, cash, cid) {
       status: "CLOSED",
       change: cid,
     };
-  } else if (close < rest) {
-    return insufficient;
   }
 
-  for (let [index, currency] of cid.reverse().entries()) {
-    let currentChange;
-    let changeLeft = currency[1] * 100;
+  for (let ammount of cid.reverse()) {
+    let currentChange = [ammount[0], 0];
+    let changeLeft = ammount[1] * 100;
 
-    if (index === 0) {
-      currentChange = ["ONE HUNDRED", 0];
-      while (rest - 10000 >= 0 && changeLeft > 0) {
-        currentChange[1] += 100;
-        changeLeft -= 10000;
-        rest -= 10000;
-      }
-    } else if (index === 1) {
-      currentChange = ["TWENTY", 0];
-      while (rest - 2000 >= 0 && changeLeft > 0) {
-        currentChange[1] += 20;
-        changeLeft -= 2000;
-        rest -= 2000;
-      }
-    } else if (index === 2) {
-      currentChange = ["TEN", 0];
-      while (rest - 1000 >= 0 && changeLeft > 0) {
-        currentChange[1] += 10;
-        changeLeft -= 1000;
-        rest -= 1000;
-      }
-    } else if (index === 3) {
-      currentChange = ["FIVE", 0];
-      while (rest - 500 >= 0 && changeLeft > 0) {
-        currentChange[1] += 5;
-        changeLeft -= 500;
-        rest -= 500;
-      }
-    } else if (index === 4) {
-      currentChange = ["ONE", 0];
-      while (rest - 100 >= 0 && changeLeft > 0) {
-        currentChange[1] += 1;
-        changeLeft -= 100;
-        rest -= 100;
-      }
-    } else if (index === 5) {
-      currentChange = ["QUARTER", 0];
-      while (rest - 25 >= 0 && changeLeft > 0) {
-        currentChange[1] += 0.25;
-        changeLeft -= 25;
-        rest -= 25;
-      }
-    } else if (index === 6) {
-      currentChange = ["DIME", 0];
-      while (rest - 10 >= 0 && changeLeft > 0) {
-        currentChange[1] += 0.1;
-        changeLeft -= 10;
-        rest -= 10;
-      }
-    } else if (index === 7) {
-      currentChange = ["NICKEL", 0];
-      while (rest - 5 >= 0 && changeLeft > 0) {
-        currentChange[1] += 0.05;
-        changeLeft -= 5;
-        rest -= 5;
-      }
-    } else if (index === 8) {
-      currentChange = ["PENNY", 0];
-      while (rest - 1 >= 0 && changeLeft > 0) {
-        currentChange[1] += 0.01;
-        changeLeft -= 1;
-        rest -= 1;
-      }
+    while (rest - currency[ammount[0]] >= 0 && changeLeft > 0) {
+      currentChange[1] += currency[ammount[0]] / 100;
+      changeLeft -= currency[ammount[0]];
+      rest -= currency[ammount[0]];
     }
 
     if (currentChange[1]) change.push(currentChange);
@@ -137,5 +83,8 @@ function checkCashRegister(price, cash, cid) {
         status: "OPEN",
         change: change,
       }
-    : insufficient;
+    : {
+        status: "INSUFFICIENT_FUNDS",
+        change: [],
+      };
 }
