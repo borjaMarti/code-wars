@@ -35,6 +35,5 @@ function josephusSurvivor(people, k) {
 // Recursive solution:
 
 function josephusSurvivor(n, k) {
-  console.log(k);
   return n < 1 ? 1 : ((josephusSurvivor(n - 1, k) + --k) % n) + 1;
 }
